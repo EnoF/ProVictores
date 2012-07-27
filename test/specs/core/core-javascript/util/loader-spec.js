@@ -10,7 +10,6 @@ describe('module : loader', function(){
 			require(['util/loader'],
 			function(loaderModule){
 				loader = loaderModule;
-				loader.setBasePath('../src/');
 			});
 			
 			return loader !== undefined;

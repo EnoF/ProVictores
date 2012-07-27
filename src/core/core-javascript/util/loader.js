@@ -38,9 +38,18 @@ define(function(){
 			_widgetPage = this.data('widget'),
 			_deferred = $.Deferred();
 		_public.loadWidgetPage(_widgetPage).then(function(article){
+			var _subWidgetDeferred = [];
 			_widget.empty();
-			_widget.append(article);
-			_deferred.resolve();
+			article.addClass("pv-" + _widgetPage);
+			article.find("[data-widget]").each(function(){
+				_subWidgetDeferred.push($(this).widget());
+			});
+			$.when.apply($, _subWidgetDeferred).then(function(){
+				_widget.append(article);
+				_deferred.resolve();
+			}).fail(function(){
+				_deferred.reject();
+			});
 		}).fail(function(){
 			_deferred.reject();
 		});

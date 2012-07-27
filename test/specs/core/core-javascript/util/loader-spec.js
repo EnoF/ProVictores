@@ -82,7 +82,7 @@ describe('module : loader', function(){
 			//When Loading the Home Widget a new section
 			_section.widget().then(function(){
 				_loaded = true;
-				_article = _section.find("article");
+				_article = _section.find(".pv-home");
 			});
 			
 			waitsFor(function(){
@@ -94,8 +94,34 @@ describe('module : loader', function(){
 				expect(_loaded).toBeTruthy();
 				expect(_article.length > 0).toBeTruthy();
 				expect(_section.find(".test").length === 0).toBeTruthy();
-				expect(_article.find("h2").text()).toEqual(_homeTitle);
-				expect(_article.find("p").text()).toEqual(_homeText);
+				expect(_article.find("h2:first").text()).toEqual(_homeTitle);
+				expect(_article.find("p:first").text()).toEqual(_homeText);
+			});
+		});
+		
+		it('should load subwidgets if there are any widgets to load', function(){
+			//Given Loader is loaded
+			//  target location is a new section
+			var _loaded = false,
+				_section = $("<section>").data("widget", "home"),
+				_guildmembersWidget,
+				_homeWidget;
+			
+			//When Loading the Home Widget a new section
+			_section.widget().then(function(){
+				_loaded = true;
+				_homeWidget = _section.find(".pv-home");
+				_guildmembersWidget = _homeWidget.find(".pv-guildmembers");
+			});
+			
+			waitsFor(function(){
+				return _loaded;
+			});
+			
+			//Then The article of the widget should be in the new section
+			runs(function(){
+				expect(_loaded).toBeTruthy();
+				expect(_guildmembersWidget.length > 0).toBeTruthy();
 			});
 		});
 		

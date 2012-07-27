@@ -1,32 +1,32 @@
-describe('module : pageloader', function(){
+describe('module : loader', function(){
 	
-	var pageloader,
+	var loader,
 		_homeTitle = "Welcome to ProVictores",
 		_homeText = "This is the guild website of ProVictores!";
 	
 	beforeEach(function(){
 		
 		waitsFor(function(){			
-			require(['util/pageloader'],
-			function(loader){
-				pageloader = loader;
-				pageloader.setBasePath('../src/');
+			require(['util/loader'],
+			function(loaderModule){
+				loader = loaderModule;
+				loader.setBasePath('../src/');
 			});
 			
-			return pageloader !== undefined;
+			return loader !== undefined;
 		});
 		
 	});
 	
 	it('should be able to load home page', function(){
-		// Given PageLoader is loaded
+		// Given Loader is loaded
 		var _loaded = false,
 			_html,
 			_article;
-		expect(pageloader).toBeDefined();
+		expect(loader).toBeDefined();
 		
 		//When Loading the widget page Home
-		pageloader.loadPage('home').then(function(html){
+		loader.loadPage('home').then(function(html){
 			_loaded = true;
 			_html = $("<html>").html(html);
 			_article = _html.find("article");
@@ -47,12 +47,12 @@ describe('module : pageloader', function(){
 	});
 	
 	it('should be able to load a widget page', function(){
-		//Given Page loader is loaded
+		//Given loader is loaded
 		var _loaded = false,
 			_article;
 		
 		//When Loading the widget page of Home
-		pageloader.loadWidgetPage('home').then(function(article){
+		loader.loadWidgetPage('home').then(function(article){
 			_loaded = true;
 			_article = article;
 		});
@@ -68,5 +68,35 @@ describe('module : pageloader', function(){
 			expect(_article.find("h2").text()).toEqual(_homeTitle);
 			expect(_article.find("p").text()).toEqual(_homeText);
 		});
+	});
+	
+	describe("Loading widgets", function(){
+		
+		it('should be able to load a widget to a given target', function(){
+			//Given Loader is loaded
+			//  target location is a new section
+			var _loaded = false,
+				_section = $("<section>").data("widget", "home"),
+				_article;
+			
+			//When Loading the Home Widget a new section
+			_section.widget().then(function(){
+				_loaded = true;
+				_article = _section.find("article");
+			});
+			
+			waitsFor(function(){
+				return _loaded;
+			});
+			
+			//Then The article of the widget should be in the new section
+			runs(function(){
+				expect(_loaded).toBeTruthy();
+				expect(_article.length > 0).toBeTruthy();
+				expect(_article.find("h2").text()).toEqual(_homeTitle);
+				expect(_article.find("p").text()).toEqual(_homeText);
+			});
+		});
+		
 	});
 });

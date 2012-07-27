@@ -31,5 +31,21 @@ define(function(){
 		}
 	};
 	
+	//Binding widget as a jQuery plugin
+	$.fn.widget = function(){
+		//The widget to load
+		var _widget = this,
+			_widgetPage = this.data('widget'),
+			_deferred = $.Deferred();
+		_public.loadWidgetPage(_widgetPage).then(function(article){
+			_widget.empty();
+			_widget.append(article);
+			_deferred.resolve();
+		}).fail(function(){
+			_deferred.reject();
+		});
+		return _deferred;
+	};
+	
 	return _public;
 });

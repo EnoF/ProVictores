@@ -72,11 +72,11 @@ describe('module : loader', function(){
 	
 	describe("Loading widgets", function(){
 		
-		it('should be able to load a widget to a given target', function(){
+		it('should empty the container before loading the widget', function(){
 			//Given Loader is loaded
 			//  target location is a new section
 			var _loaded = false,
-				_section = $("<section>").data("widget", "home"),
+				_section = $("<section>").data("widget", "home").append($('<div>').addClass("test")),
 				_article;
 			
 			//When Loading the Home Widget a new section
@@ -93,6 +93,7 @@ describe('module : loader', function(){
 			runs(function(){
 				expect(_loaded).toBeTruthy();
 				expect(_article.length > 0).toBeTruthy();
+				expect(_section.find(".test").length === 0).toBeTruthy();
 				expect(_article.find("h2").text()).toEqual(_homeTitle);
 				expect(_article.find("p").text()).toEqual(_homeText);
 			});

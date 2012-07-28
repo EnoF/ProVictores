@@ -124,5 +124,36 @@ describe('module : loader', function(){
 			});
 		});
 		
+		it('should pass along params for widget initialisation', function(){
+			//Given Loader is loaded
+			//  target location is a new section
+			//  target location has params
+			var _loaded = false,
+				_section = $("<section>").data("widget", "guildmember").
+								data("widgetParams", {
+									name : "EnoF",
+									rank : "Guild Leader"
+								}),
+				_article;
+			
+			//When Loading the Home Widget a new section
+			_section.widget().then(function(){
+				_loaded = true;
+				_article = _section.find(".pv-guildmember");
+			});
+			
+			waitsFor(function(){
+				return _loaded;
+			});
+			
+			//Then The article of the widget should be in the new section
+			runs(function(){
+				expect(_loaded).toBeTruthy();
+				expect(_article.length > 0).toBeTruthy();
+				expect(_article.find('.pv-guildmember-name').text()).toEqual('EnoF');
+				expect(_article.find('.pv-guildmember-rank').text()).toEqual('Guild Leader');
+			});
+		});
+		
 	});
 });

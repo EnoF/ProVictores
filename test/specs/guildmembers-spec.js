@@ -27,13 +27,24 @@ describe('A guest visits the guild page to apply for our guild', function(){
 	
 	it('should be able to look through our member list to see the details of a guild member', function(){
 		//Given The widget contains a list of members
-		var _list = _guildmembersWidget.find('ol');
+		var _list = _guildmembersWidget.find('ol'),
+			_loaded;
 		
 		//When The Guest clicks on a Guild member
 		_list.find('li:first').click();
 		
+		_list.on('initialized', function(){
+			_loaded = true;
+		});
+		
+		waitsFor(function(){
+			return _loaded;
+		});
+		
 		//Then The Guest should see the Guild Member widget
-		expect(_guildmembersWidget.find('.pv-guildmember').length > 0).toBeTruthy();
+		runs(function(){
+			expect(_guildmembersWidget.find('.pv-guildmember').length > 0).toBeTruthy();
+		});
 	});
 	
 	function loadWidget(){

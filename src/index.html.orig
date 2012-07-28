@@ -10,7 +10,11 @@
 	<body>
 		<article>
 			<h1>ProVictores</h1>
-			<span>Andere tekst</span>
+<<<<<<< HEAD
+			<p>Andere tekst</p>
+=======
+			<span>Hallo</span>
+>>>>>>> commit check test
 		</article>
 	</body>
 </html>

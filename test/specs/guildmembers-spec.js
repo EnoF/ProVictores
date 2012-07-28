@@ -19,15 +19,15 @@ describe('A guest visits the guild page to apply for our guild', function(){
 		 
 		//When The Guest opens the widget
 		//  the widget has been loaded in the before each
-		_list = _guildmembersWidget.find('ul');
+		_list = _guildmembersWidget.find('ol');
 		
 		//Then The Guest should see a list of Guild Members
-		expect(_list.find('li').lenght > 0).toBeTruthy();
+		expect(_list.find('li').length > 0).toBeTruthy();
 	});
 	
 	it('should be able to look through our member list to see the details of a guild member', function(){
 		//Given The widget contains a list of members
-		var _list = _guildmembersWidget.find('ul');
+		var _list = _guildmembersWidget.find('ol');
 		
 		//When The Guest clicks on a Guild member
 		_list.find('li:first').click();
@@ -41,8 +41,9 @@ describe('A guest visits the guild page to apply for our guild', function(){
 		var _loaded = false;
 		
 		require(['util/loader'], function(){
-			_guildmembersWidget.widget();
-			_loaded = true;
+			_guildmembersWidget.widget().then(function(){
+				_loaded = true;
+			});
 		});
 		
 		waitsFor(function(){

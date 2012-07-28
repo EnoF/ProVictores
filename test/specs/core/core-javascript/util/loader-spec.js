@@ -155,5 +155,28 @@ describe('module : loader', function(){
 			});
 		});
 		
+		it('should fire initialized event when the widget has initialized', function(){
+			//Given Loader is loaded
+			//  target location is a new section
+			var _loaded = false,
+				_section = $("<section>").data("widget", "home");
+			
+			//When Loading the Home Widget a new section
+			_section.widget();
+			
+			_section.on('initialized', function(){
+				_loaded = true;
+			});
+			
+			waitsFor(function(){
+				return _loaded;
+			});
+			
+			//Then The article of the widget should be in the new section
+			runs(function(){
+				expect(_loaded).toBeTruthy();
+			});
+		});
+		
 	});
 });

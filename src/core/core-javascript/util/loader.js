@@ -21,8 +21,10 @@ define(function(){
 				if(_article.length === 0){
 					throw new Error("No Article found");
 				}
-				
-				_deferred.resolve(_article);
+				require({paths : { 'widget' : '../..'}},['widget/' + page + '/src/app'], function(app){
+					app.initialize(_article);
+					_deferred.resolve(_article);
+				});
 			}).fail(function(error){
 				_deferred.reject(error);
 			});

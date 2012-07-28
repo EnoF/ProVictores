@@ -124,8 +124,6 @@ describe('module : loader', function(){
 			});
 		});
 		
-<<<<<<< HEAD
-=======
 		it('should pass along params for widget initialisation', function(){
 			//Given Loader is loaded
 			//  target location is a new section
@@ -180,6 +178,5 @@ describe('module : loader', function(){
 			});
 		});
 		
->>>>>>> e55454f12f6a3ac13db49d365c6cee01a8148b2e
 	});
 });

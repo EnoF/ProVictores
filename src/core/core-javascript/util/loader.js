@@ -11,7 +11,7 @@ define(function(){
 				url : _private.basePath + page + "/index.html"
 			});
 		},
-		loadWidgetPage : function(page){
+		loadWidgetPage : function(page, params){
 			var _deferred = $.Deferred();
 			
 			_public.loadPage(page).then(function(html){
@@ -21,8 +21,15 @@ define(function(){
 				if(_article.length === 0){
 					throw new Error("No Article found");
 				}
-				
-				_deferred.resolve(_article);
+				require({paths : { 'widget' : '../..'}},['widget/' + page + '/src/app'], function(app){
+					try{
+						app.initialize(_article, params);
+						_deferred.resolve(_article);
+					}catch(e){
+						console.error(e);
+						_deferred.reject(e);
+					}
+				});
 			}).fail(function(error){
 				_deferred.reject(error);
 			});
@@ -36,8 +43,9 @@ define(function(){
 		//The widget to load
 		var _widget = this,
 			_widgetPage = this.data('widget'),
+			_widgetParams = this.data('widgetParams'),
 			_deferred = $.Deferred();
-		_public.loadWidgetPage(_widgetPage).then(function(article){
+		_public.loadWidgetPage(_widgetPage, _widgetParams).then(function(article){
 			var _subWidgetDeferred = [];
 			_widget.empty();
 			article.addClass("pv-" + _widgetPage);
@@ -46,6 +54,7 @@ define(function(){
 			});
 			$.when.apply($, _subWidgetDeferred).then(function(){
 				_widget.append(article);
+				_widget.trigger("initialized");
 				_deferred.resolve();
 			}).fail(function(){
 				_deferred.reject();

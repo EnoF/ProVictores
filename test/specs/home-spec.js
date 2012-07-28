@@ -17,7 +17,7 @@ describe('A guest visits the home page to gain quick access to important feature
 		
 	});
 	
-	it('should show a list of all guild members', function(){
+	it('should show the guildmembers widget', function(){
 		//Given The Guest is on the Home Screen
 		expect(_homeWidget.find("article").length > 0).toBeTruthy();
 		

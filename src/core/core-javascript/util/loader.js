@@ -1,6 +1,6 @@
 define(function(){
 	var _private = {
-		basePath : "/src/",
+		basePath : "./",
 		loadCss : function(page){
 			var _link = $('<link href="' + _private.basePath + page + '/css/style.css" type="text/css" rel="stylesheet">'),
 				_hasBeenLoadedBefore = $('head').find('link[href="'+ _private.basePath + page + '/css/style.css"]').length > 0;

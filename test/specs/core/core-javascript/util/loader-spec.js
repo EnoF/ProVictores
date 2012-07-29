@@ -178,5 +178,30 @@ describe('module : loader', function(){
 			});
 		});
 		
+		it('should append the widget style sheet', function(){
+			//Given the widget has an style sheet
+			var _loaded = false,
+				_section = $("<section>").data("widget", "home");
+			
+			//When Loading the home widget
+			_section.widget();
+			
+			_section.on('initialized', function(){
+				_loaded = true;
+			});
+			
+			waitsFor(function(){
+				return _loaded;
+			});
+			
+			//Then the current header should contain the css style sheet
+			//  There should be no duplicate sheets
+			runs(function(){
+				expect(_loaded).toBeTruthy();
+				expect($('link[href="' + loader.getBasePath() + 'home/css/style.css"]').length).toBeGreaterThan(0);
+				expect($('link[href="' + loader.getBasePath() + 'home/css/style.css"]').length).toBeLessThan(2);
+			});
+		});
+		
 	});
 });

@@ -1,8 +1,18 @@
 define(function(){
 	var _private = {
-		basePath : "/src/"
+		basePath : "/src/",
+		loadCss : function(page){
+			var _link = $('<link href="' + _private.basePath + page + '/css/style.css" type="text/css" rel="stylesheet">'),
+				_hasBeenLoadedBefore = $('head').find('link[href="'+ _private.basePath + page + '/css/style.css"]').length > 0;
+			if(!_hasBeenLoadedBefore){
+				$('head').append(_link);
+			}			
+		}
 	},
 	_public = {
+		getBasePath : function(){
+			return _private.basePath;
+		},
 		setBasePath : function(basePath){
 			_private.basePath = basePath;
 		},
@@ -24,6 +34,7 @@ define(function(){
 				require({paths : { 'widget' : '../..'}},['widget/' + page + '/src/app'], function(app){
 					try{
 						app.initialize(_article, params);
+						_private.loadCss(page);
 						_deferred.resolve(_article);
 					}catch(e){
 						console.error(e);

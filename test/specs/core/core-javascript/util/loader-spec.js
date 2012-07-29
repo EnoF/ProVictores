@@ -130,10 +130,7 @@ describe('module : loader', function(){
 			//  target location has params
 			var _loaded = false,
 				_section = $("<section>").data("widget", "guildmember").
-								data("widgetParams", {
-									name : "EnoF",
-									rank : "Guild Leader"
-								}),
+								data("widgetParams", 1),
 				_article;
 			
 			//When Loading the Home Widget a new section

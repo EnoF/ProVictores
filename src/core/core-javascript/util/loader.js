@@ -33,9 +33,10 @@ define(function(){
 				}
 				require({paths : { 'widget' : '../..'}},['widget/' + page + '/src/app'], function(app){
 					try{
-						app.initialize(_article, params);
 						_private.loadCss(page);
-						_deferred.resolve(_article);
+						app.initialize(_article, params).then(function(){
+							_deferred.resolve(_article);
+						});
 					}catch(e){
 						console.error(e);
 						_deferred.reject(e);

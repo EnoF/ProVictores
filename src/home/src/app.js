@@ -9,6 +9,7 @@ define(function(){
 		initialize : function(){
 			
 			$('.home').html();
+			return $.Deferred().resolve();
 		},
 		destroy : function(){
 			

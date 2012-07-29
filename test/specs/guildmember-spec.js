@@ -17,10 +17,7 @@ describe('A guest clicks on guildmember to see more info', function(){
 		//  EnoF Guild Leader
 		_guildmemberWidget.
 			data("widget", "guildmember").
-			data("widgetParams", {
-				name : "EnoF",
-				rank : "Guild Leader"
-			});
+			data("widgetParams", 1);
 			
 		//When The widget is loaded
 		loadWidget();

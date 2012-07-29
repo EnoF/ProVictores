@@ -5,7 +5,6 @@ define(function(){
 					var _li = $(this),
 						_member = _li.data('guildmember'),
 						_memberWidget = $('<section>');
-					
 					_memberWidget.data('widget', 'guildmember');
 					_memberWidget.data('widgetParams', _member);
 					_li.append(_memberWidget);
@@ -16,6 +15,7 @@ define(function(){
 		_public = {
 			initialize : function(widget){
 				_private.bindEvents(widget);
+				return $.Deferred().resolve();
 			}
 		};
 	

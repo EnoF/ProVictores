@@ -9,7 +9,7 @@ function(service){
 				if(id === undefined){
 					throw new Error("Define the params to initialize GuildMember Widget")
 				}
-				return service.get('services/guildmember/' + id).then(function(member){
+				return service.get('guildmember/' + id).then(function(member){
 					widget.find('.pv-guildmember-name').text(member.name);
 					widget.find('.pv-guildmember-rank').text(member.rank);
 

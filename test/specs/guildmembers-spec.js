@@ -12,7 +12,7 @@ describe('A guest visits the guild page to apply for our guild', function(){
 		$('.testArea').remove();
 	});
 	
-	it('should be able to show a list of all guild members', function(){
+	it('should be able to show a list of all guild members retrieved from services', function(){
 		//Given The Guildmembers widget has a section
 		//  _guildmembersWidget is our section
 		var _list;

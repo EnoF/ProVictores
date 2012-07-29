@@ -21,6 +21,25 @@ define(function(){
 				url : _private.basePath + page + "/index.html"
 			});
 		},
+		loadTemplate : function(page, template){
+			var _deferred = $.Deferred();
+			$.ajax({
+				url : _private.basePath + page + '/templates/'+ template + ".html"
+			}).then(function(html){
+				var _html = $("<html>").html(html),
+					_article = _html.find("article");
+					
+				if(_article.length === 0){
+					throw new Error("No Article found");
+				}
+				
+				_deferred.resolve(_article);
+			}).fail(function(){
+				_deferred.reject();
+			});
+			
+			return _deferred;
+		},
 		loadWidgetPage : function(page, params){
 			var _deferred = $.Deferred();
 			

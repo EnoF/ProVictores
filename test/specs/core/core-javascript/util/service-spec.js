@@ -18,7 +18,7 @@ describe('module : service', function(){
 		//Given the service url: 
 		//  test/services/guildmember/1
 		var _loaded = false,
-			_url = "services/guildmember/1",
+			_url = "guildmember/1",
 			_response;
 		
 		//When getting the service

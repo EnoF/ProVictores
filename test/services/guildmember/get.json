@@ -1,0 +1,31 @@
+[{
+	"id" : 1,
+	"name" : "EnoF",
+	"avatar" : "Avatar",
+	"rank" : "Guild Leader"
+},{
+	"id" : 2,
+	"name" : "Vyll",
+	"avatar" : "Avatar",
+	"rank" : "End Boss"
+},{
+	"id" : 3,
+	"name" : "w00",
+	"avatar" : "Avatar",
+	"rank" : "Guild Leader"
+},{
+	"id" : 4,
+	"name" : "b00bcake",
+	"avatar" : "Avatar",
+	"rank" : "Guild Leader"
+},{
+	"id" : 5,
+	"name" : "Diange",
+	"avatar" : "Avatar",
+	"rank" : "Guild Officer"
+},{
+	"id" : 6,
+	"name" : "Enahs",
+	"avatar" : "Avatar",
+	"rank" : "Guild Officer"
+}]

@@ -15,8 +15,8 @@ function(loader){
 			},
 			get : function(resource, params){
 				return $.ajax({
-					url : _private.getUrl(resource, '/get'),
-					params : params
+					url : _private.getUrl('services/' + resource, '/get'),
+					params : params 
 				});
 			},
 			post : function(){

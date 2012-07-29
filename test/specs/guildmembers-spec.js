@@ -47,6 +47,40 @@ describe('A guest visits the guild page to apply for our guild', function(){
 		});
 	});
 	
+	it('should destroy the guildmember widget when opening a new guildmember widget', function(){
+		//Given The widget already has a guildmember widget open
+		var _list = _guildmembersWidget.find('ol'),
+			_loaded = false;
+		
+		_list.find('li:first').click();
+		
+		_list.on('initialized', function(){
+			_loaded = true;
+		});
+		
+		waitsFor(function(){
+			return _loaded;
+		});
+			
+		//When clicking an other member
+		runs(function(){
+			_loaded = false;
+			_list.find('li:last').click();
+			
+			waitsFor(function(){
+				return _loaded;
+			});
+			
+		});
+		
+		//Then the new guildmember widget should be the only one open
+		runs(function(){
+			expect(_list.find('.pv-guildmember').length).toBeLessThan(2);
+			expect(_list.find('.pv-guildmember').length).toBeGreaterThan(0);
+		});
+		
+	});
+	
 	function loadWidget(){
 		
 		var _loaded = false;

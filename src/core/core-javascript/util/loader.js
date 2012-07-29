@@ -66,7 +66,7 @@ define(function(){
 			});
 			$.when.apply($, _subWidgetDeferred).then(function(){
 				_widget.append(article);
-				_widget.trigger("initialized");
+				_widget.trigger("initialized", _widget);
 				_deferred.resolve();
 			}).fail(function(){
 				_deferred.reject();
@@ -75,6 +75,11 @@ define(function(){
 			_deferred.reject();
 		});
 		return _deferred;
+	};
+	
+	$.fn.destroy = function(){
+		this.trigger("destroyed", this);
+		this.remove();
 	};
 	
 	return _public;

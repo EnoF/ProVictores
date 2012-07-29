@@ -7,6 +7,7 @@ define(function(){
 						_memberWidget = $('<section>');
 					_memberWidget.data('widget', 'guildmember');
 					_memberWidget.data('widgetParams', _member);
+					widget.find('.pv-guildmember').destroy();
 					_li.append(_memberWidget);
 					_memberWidget.widget();
 				});

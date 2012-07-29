@@ -6,7 +6,7 @@ function(loader, service){
 				widget.on('click', 'li', function(){
 					var _li = $(this),
 						_member = _li.data('guildmember'),
-						_memberWidget = $('<section>');
+						_memberWidget = _li.find('.pv-widget-placeholder');
 					_memberWidget.data('widget', 'guildmember');
 					_memberWidget.data('widgetParams', _member);
 					widget.find('.pv-guildmember').destroy();

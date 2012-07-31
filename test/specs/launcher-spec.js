@@ -14,7 +14,7 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 	
 	it('should load the widget with information about ProVictores', function(){
 		//Given The about widget is defined
-		_launchBar.data("widget", "launchbar");
+		_launchBar.data("widget", "launcher");
 		loadWidget();
 			
 		runs(function(){

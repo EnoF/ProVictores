@@ -34,3 +34,14 @@
 	-webkit-opacity: 0.5;
 	opacity: 0.5;
 }
+
+.pv-forward{
+	position: absolute;
+	left: 800px;
+	width: 800px;
+	z-index: -1;
+	
+	-moz-opacity: 0.5;
+	-webkit-opacity: 0.5;
+	opacity: 0.5;
+}

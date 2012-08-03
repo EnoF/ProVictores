@@ -5,16 +5,25 @@ function(loader, service){
 			loadSection : null,
 			iterateWidgetStack : function(newWidget){
 				var _currentWidget = _private.widget.find('.pv-current'),
-					_previousWidget = _private.widget.find('.pv-previous');
+					_previousWidget = _private.widget.find('.pv-previous'),
+					_forwardWidget = _private.widget.find('.pv-forward');
+				_forwardWidget.remove();
 				_previousWidget.removeClass('pv-previous').addClass('pv-hidden');
 				_currentWidget.removeClass('pv-current').addClass('pv-previous');
 				newWidget.addClass('pv-current');
 			},
 			loadPreviousWidget : function(widgetId){
-				var _widget = _private.widget.find('.pv-' + widgetId),
-					_container = _widget.parent();
+				var _widget = _private.widget.find('.pv-content > .pv-previous > .pv-' + widgetId),
+					_container = _widget.parent(),
+					_current = _private.widget.find('.pv-current');
+				if(_current.children('.pv-' + widgetId).length > 0){
+					_private.widget.trigger('initialized');
+					return _current;
+				}
 				if(_widget.length > 0){
-					_container.removeClass('pv-previous').removeClass('pv-hidden');
+					_current.removeClass('pv-current');
+					_current.addClass('pv-forward');
+					_container.removeClass('pv-previous').removeClass('pv-hidden').removeClass('pv-forward');
 					_container.addClass('pv-current');
 					_private.widget.trigger('initialized');
 				}

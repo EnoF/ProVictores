@@ -178,6 +178,75 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 		runs(function(){
 			expect(_launcher.find('.pv-aboutprovictores').length).toBeGreaterThan(0);
 			expect(_launcher.find('.pv-aboutprovictores').length).toBeLessThan(2);
+			expect(_launcher.find('.pv-current').length).toBeLessThan(2);
+		});
+	});
+	
+	it('should not reload a widget if the widget was a child widget', function(){
+		//Given The about widget is launched
+		var _loaded = false;
+		_launcher.data('widget', 'launcher');
+		loadWidget();
+		
+		runs(function(){
+			_launcher.one('initialized', function(){
+				_loaded = true;
+			});	
+			_launcher.find('#launch-home').click();
+		});
+		
+		//When The Guild Members widget is launched
+		waitsFor(function(){
+			return _loaded;
+		});
+		
+		runs(function(){
+			_loaded = false;
+			_launcher.one('initialized', function(){
+				_loaded = true;
+			});	
+			_launcher.find('#launch-aboutprovictores').click();
+		});
+		
+		waitsFor(function(){
+			return _loaded;
+		});
+		
+		//Then The about widget should have the .pv-previous class
+		//  The Guild Members widget should have the .pv-current class
+		runs(function(){
+			_loaded = false;
+			_launcher.one('initialized', function(){
+				_loaded = true;
+			});	
+			_launcher.find('#launch-home').click();
+		});
+		
+		waitsFor(function(){
+			return _loaded;
+		});
+		
+		//Then The about widget should have the .pv-previous class
+		//  The Guild Members widget should have the .pv-current class
+		runs(function(){
+			_loaded = false;
+			_launcher.one('initialized', function(){
+				_loaded = true;
+			});	
+			_launcher.find('#launch-guildmembers').click();
+		});
+		
+		waitsFor(function(){
+			return _loaded;
+		});
+		
+		//Then The about widget should have the .pv-previous class
+		//  The Guild Members widget should have the .pv-current class
+		runs(function(){
+			expect(_launcher.find('.pv-aboutprovictores').length).toEqual(0);
+			expect(_launcher.find('.pv-aboutprovictores').length).toBeLessThan(2);
+			expect(_launcher.find('.pv-current').length).toBeLessThan(2);
+			expect(_launcher.find('.pv-forward').length).toBeLessThan(2);
 		});
 	});
 	

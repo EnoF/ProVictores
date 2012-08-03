@@ -6,7 +6,7 @@ function(loader, service){
 			iterateWidgetStack : function(newWidget){
 				var _currentWidget = _private.widget.find('.pv-current'),
 					_previousWidget = _private.widget.find('.pv-previous');
-				_previousWidget.removeClass('pv-previous');
+				_previousWidget.removeClass('pv-previous').addClass('pv-hidden');
 				_currentWidget.removeClass('pv-current').addClass('pv-previous');
 				newWidget.addClass('pv-current');
 			},

@@ -1,4 +1,4 @@
-.pv-button{
+.pv-launcher .pv-button{
 	background: url('/ProVictores/src/core/core-css/img/button.png') no-repeat center;
 	width: 50px;
 	padding: 30px 50px;
@@ -6,15 +6,31 @@
 	display: inline-block;
 }
 
-a{
+.pv-launcher a{
 	color: #D6230C;
 	text-decoration:none;
 }
 
-a:hover{
+.pv-launcher a:hover{
 	color: #808080;
 }
 
-a:visited:not(:hover) {
-	color:#D6230C;
+.pv-launcher section{
+	float: left;
+}
+
+.pv-current{
+	width: 800px;
+	background: #ffffff;
+}
+
+.pv-previous{
+	position: absolute;
+	left: -400px;
+	width: 800px;
+	z-index: -1;
+	
+	-moz-opacity: 0.5;
+	-webkit-opacity: 0.5;
+	opacity: 0.5;
 }

@@ -11,3 +11,11 @@ h1 {
 	margin: auto;
 	width: 800px;
 }
+
+.pv-content{
+	position: relative;
+}
+
+.pv-hidden{
+	display: none;
+}

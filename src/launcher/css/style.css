@@ -1,0 +1,20 @@
+.pv-button{
+	background: url('/ProVictores/src/core/core-css/img/button.png') no-repeat center;
+	width: 50px;
+	padding: 30px 50px;
+	text-align: center;
+	display: inline-block;
+}
+
+a{
+	color: #D6230C;
+	text-decoration:none;
+}
+
+a:hover{
+	color: #808080;
+}
+
+a:visited:not(:hover) {
+	color:#D6230C;
+}

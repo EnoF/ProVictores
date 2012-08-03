@@ -3,7 +3,7 @@ describe('A guest clicks on guildmember to see more info', function(){
 	var _guildmemberWidget = $("<section>");
 	
 	beforeEach(function(){
-		$('body').append($('<section>').addClass('.testArea'));
+		$('body').append($('<section>').addClass('testArea'));
 		$('.testArea').append(_guildmemberWidget);
 	});
 	

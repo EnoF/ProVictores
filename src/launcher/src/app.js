@@ -10,14 +10,33 @@ function(loader, service){
 				_currentWidget.removeClass('pv-current').addClass('pv-previous');
 				newWidget.addClass('pv-current');
 			},
+			loadPreviousWidget : function(widgetId){
+				var _widget = _private.widget.find('.pv-' + widgetId),
+					_container = _widget.parent();
+				if(_widget.length > 0){
+					_container.removeClass('pv-previous').removeClass('pv-hidden');
+					_container.addClass('pv-current');
+					_private.widget.trigger('initialized');
+				}
+				
+				return _widget;
+			},
+			getWidget : function(widgetId){
+				var _widget = _private.loadPreviousWidget(widgetId);
+				if(_widget.length === 0){
+					_widget = $('<section>').data('widget', widgetId);	
+					_private.iterateWidgetStack(_widget);	
+					_private.loadSection.append(_widget);
+					_widget.widget(widgetId);
+				}
+			},
 			bindEvents : function(widget){
 				widget.on('click', 'nav a', function(event){
 					event.preventDefault();
-					var _widgetId = this.id.replace(/launch\-/, ''),
-						_newWidget = $('<section>').data('widget', _widgetId);
-					_private.iterateWidgetStack(_newWidget);	
-					_private.loadSection.append(_newWidget);
-					_newWidget.widget(_widgetId);
+					var _widgetId = this.id.replace(/launch\-/, '');
+					
+					_private.getWidget(_widgetId);
+					
 				});
 			}
 		},

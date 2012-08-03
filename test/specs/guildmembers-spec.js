@@ -1,9 +1,10 @@
 describe('A guest visits the guild page to apply for our guild', function(){
 	
-	var _guildmembersWidget = $("<section>").data("widget", "guildmembers");
+	var _guildmembersWidget;
 	
 	beforeEach(function(){
-		$('body').append($('<section>').addClass('.testArea'));
+		_guildmembersWidget =  $("<section>").data("widget", "guildmembers");
+		$('body').append($('<section>').addClass('testArea'));
 		$('.testArea').append(_guildmembersWidget);
 		loadWidget();
 	});

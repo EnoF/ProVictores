@@ -3,7 +3,7 @@ describe('A guest opens about ProVictores widget to gain more information about 
 	var _aboutWidget = $("<section>");
 	
 	beforeEach(function(){
-		$('body').append($('<section>').addClass('.testArea'));
+		$('body').append($('<section>').addClass('testArea'));
 		$('.testArea').append(_aboutWidget);
 	});
 	

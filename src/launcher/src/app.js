@@ -13,13 +13,15 @@ function(loader, service){
 				newWidget.addClass('pv-current');
 			},
 			loadPreviousWidget : function(widgetId){
-				var _widget = _private.widget.find('.pv-content > .pv-previous > .pv-' + widgetId),
-					_container = _widget.parent(),
+				var _widget,
+					_container,
 					_current = _private.widget.find('.pv-current');
 				if(_current.children('.pv-' + widgetId).length > 0){
 					_private.widget.trigger('initialized');
 					return _current;
 				}
+				_widget = _private.widget.find('.pv-content > .pv-previous > .pv-' + widgetId + ', .pv-content > .pv-forward > .pv-' + widgetId);
+				_container = _widget.parent();
 				if(_widget.length > 0){
 					_current.removeClass('pv-current');
 					_current.addClass('pv-forward');

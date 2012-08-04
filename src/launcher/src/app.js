@@ -7,8 +7,8 @@ function(loader, service){
 				var _currentWidget = _private.widget.find('.pv-current'),
 					_previousWidget = _private.widget.find('.pv-previous'),
 					_forwardWidget = _private.widget.find('.pv-forward');
-				_forwardWidget.remove();
-				_previousWidget.remove();
+				_forwardWidget.destroy();
+				_previousWidget.destroy();
 				_currentWidget.removeClass('pv-current').addClass('pv-previous');
 				newWidget.addClass('pv-current');
 			},

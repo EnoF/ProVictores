@@ -18,17 +18,7 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 		_launcher.data("widget", "launcher");
 		loadWidget();
 			
-		runs(function(){
-			//When The About link is clicked
-			_launcher.find('#launch-aboutprovictores').click();
-			_launcher.one('initialized', function(){
-				_loaded = true;
-			});		
-		});
-		
-		waitsFor(function(){
-			return _loaded;
-		});
+		launchWidget('aboutprovictores');
 		
 		runs(function(){
 			//Then the widget should have a navigation element
@@ -44,29 +34,10 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 		_launcher.data('widget', 'launcher');
 		loadWidget();
 		
-		runs(function(){
-			_launcher.find('#launch-aboutprovictores').click();
-			_launcher.one('initialized', function(){
-				_loaded = true;
-			});	
-		});
-		
-		waitsFor(function(){
-			return _loaded;
-		});
+		launchWidget('aboutprovictores');
 		
 		//When The Guild Members widget is launched
-		runs(function(){
-			_loaded = false;
-			_launcher.find('#launch-guildmembers').click();
-			_launcher.one('initialized', function(){
-				_loaded = true;
-			});	
-		});
-		
-		waitsFor(function(){
-			return _loaded;
-		});
+		launchWidget('guildmembers');
 		
 		//Then The about widget should have the .pv-previous class
 		//  The Guild Members widget should have the .pv-current class
@@ -82,48 +53,19 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 		_launcher.data('widget', 'launcher');
 		loadWidget();
 		
-		runs(function(){
-			_launcher.find('#launch-aboutprovictores').click();
-			_launcher.one('initialized', function(){
-				_loaded = true;
-			});	
-		});
+		launchWidget('aboutprovictores');
 		
 		//When The Guild Members widget is launched
-		waitsFor(function(){
-			return _loaded;
-		});
+		launchWidget('guildmembers');
 		
-		runs(function(){
-			_loaded = false;
-			_launcher.find('#launch-guildmembers').click();
-			_launcher.one('initialized', function(){
-				_loaded = true;
-			});	
-		});
-		
-		waitsFor(function(){
-			return _loaded;
-		});
+		//Then The about widget should have the .pv-previous class
+		//  The Guild Members widget should have the .pv-current class
+		launchWidget('home');
 		
 		//Then The about widget should have the .pv-previous class
 		//  The Guild Members widget should have the .pv-current class
 		runs(function(){
-			_loaded = false;
-			_launcher.find('#launch-home').click();
-			_launcher.one('initialized', function(){
-				_loaded = true;
-			});	
-		});
-		
-		waitsFor(function(){
-			return _loaded;
-		});
-		
-		//Then The about widget should have the .pv-previous class
-		//  The Guild Members widget should have the .pv-current class
-		runs(function(){
-			expect(_launcher.find('.pv-hidden .pv-aboutprovictores').length).toBeGreaterThan(0);
+			expect(_launcher.find('.pv-aboutprovictores').length).toEqual(0);
 			expect(_launcher.find('.pv-previous .pv-guildmembers').length).toBeGreaterThan(0);
 			expect(_launcher.find('.pv-current .pv-home').length).toBeGreaterThan(0);
 		});
@@ -135,43 +77,14 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 		_launcher.data('widget', 'launcher');
 		loadWidget();
 		
-		runs(function(){
-			_launcher.one('initialized', function(){
-				_loaded = true;
-			});	
-			_launcher.find('#launch-aboutprovictores').click();
-		});
+		launchWidget('aboutprovictores');
 		
-		//When The Guild Members widget is launched
-		waitsFor(function(){
-			return _loaded;
-		});
-		
-		runs(function(){
-			_loaded = false;
-			_launcher.one('initialized', function(){
-				_loaded = true;
-			});	
-			_launcher.find('#launch-guildmembers').click();
-		});
-		
-		waitsFor(function(){
-			return _loaded;
-		});
+		//When The Guild Members widget is launched		
+		launchWidget('guildmembers');
 		
 		//Then The about widget should have the .pv-previous class
 		//  The Guild Members widget should have the .pv-current class
-		runs(function(){
-			_loaded = false;
-			_launcher.one('initialized', function(){
-				_loaded = true;
-			});	
-			_launcher.find('#launch-aboutprovictores').click();
-		});
-		
-		waitsFor(function(){
-			return _loaded;
-		});
+		launchWidget('aboutprovictores');
 		
 		//Then The about widget should have the .pv-previous class
 		//  The Guild Members widget should have the .pv-current class
@@ -188,57 +101,18 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 		_launcher.data('widget', 'launcher');
 		loadWidget();
 		
-		runs(function(){
-			_launcher.one('initialized', function(){
-				_loaded = true;
-			});	
-			_launcher.find('#launch-home').click();
-		});
+		launchWidget('home');
 		
 		//When The Guild Members widget is launched
-		waitsFor(function(){
-			return _loaded;
-		});
-		
-		runs(function(){
-			_loaded = false;
-			_launcher.one('initialized', function(){
-				_loaded = true;
-			});	
-			_launcher.find('#launch-aboutprovictores').click();
-		});
-		
-		waitsFor(function(){
-			return _loaded;
-		});
+		launchWidget('aboutprovictores');
 		
 		//Then The about widget should have the .pv-previous class
 		//  The Guild Members widget should have the .pv-current class
-		runs(function(){
-			_loaded = false;
-			_launcher.one('initialized', function(){
-				_loaded = true;
-			});	
-			_launcher.find('#launch-home').click();
-		});
-		
-		waitsFor(function(){
-			return _loaded;
-		});
+		launchWidget('home');
 		
 		//Then The about widget should have the .pv-previous class
 		//  The Guild Members widget should have the .pv-current class
-		runs(function(){
-			_loaded = false;
-			_launcher.one('initialized', function(){
-				_loaded = true;
-			});	
-			_launcher.find('#launch-guildmembers').click();
-		});
-		
-		waitsFor(function(){
-			return _loaded;
-		});
+		launchWidget('guildmembers');
 		
 		//Then The about widget should have the .pv-previous class
 		//  The Guild Members widget should have the .pv-current class
@@ -249,6 +123,22 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 			expect(_launcher.find('.pv-forward').length).toBeLessThan(2);
 		});
 	});
+	
+	function launchWidget(widgetId){
+		var _loaded = false;
+		
+		runs(function(){
+			//When The About link is clicked
+			_launcher.one('initialized', function(){
+				_loaded = true;
+			});		
+			_launcher.find('#launch-' + widgetId).click();
+		});
+		
+		waitsFor(function(){
+			return _loaded;
+		});
+	}
 	
 	function loadWidget(){
 		

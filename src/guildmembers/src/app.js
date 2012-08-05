@@ -3,7 +3,8 @@ function(loader, service){
 	var _private = {
 			widget : null,
 			bindEvents : function(widget){
-				widget.on('click', 'li', function(){
+				_private.widget.on('click', 'li', function(){
+					if(_private.widget.is('.pv-disabled')) return;
 					var _li = $(this),
 						_member = _li.data('guildmember'),
 						_memberWidget = _li.find('.pv-widget-placeholder');

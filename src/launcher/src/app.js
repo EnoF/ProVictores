@@ -10,6 +10,7 @@ function(loader, service){
 				_forwardWidget.destroy();
 				_previousWidget.destroy();
 				_currentWidget.removeClass('pv-current').addClass('pv-previous');
+				_currentWidget.find('article').addClass('pv-disabled');
 				newWidget.addClass('pv-current');
 			},
 			loadPreviousWidget : function(widgetId){
@@ -25,8 +26,10 @@ function(loader, service){
 				if(_widget.length > 0){
 					_current.removeClass('pv-current');
 					_current.addClass('pv-forward');
+					_current.find('article').addClass('pv-disabled');
 					_container.removeClass('pv-previous').removeClass('pv-hidden').removeClass('pv-forward');
 					_container.addClass('pv-current');
+					_container.find('.pv-disabled').removeClass('pv-disabled');
 					_private.widget.trigger('initialized');
 				}
 				

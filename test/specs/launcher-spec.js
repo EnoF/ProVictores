@@ -97,7 +97,6 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 	
 	it('should not reload a widget if the widget was a child widget', function(){
 		//Given The about widget is launched
-		var _loaded = false;
 		_launcher.data('widget', 'launcher');
 		loadWidget();
 		
@@ -121,6 +120,37 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 			expect(_launcher.find('.pv-aboutprovictores').length).toBeLessThan(2);
 			expect(_launcher.find('.pv-current').length).toBeLessThan(2);
 			expect(_launcher.find('.pv-forward').length).toBeLessThan(2);
+		});
+	});
+	
+	it('should disable widget events of widgets in pv-previous zone', function(){
+		//Given the home widget is launched in pv-previous zone
+		var _member;
+		_launcher.data('widget', 'launcher');
+		loadWidget();
+		
+		launchWidget('home');
+		launchWidget('aboutprovictores');
+		
+		//When clicking on the guildmember the guildmember widget should not be loaded
+		runs(function(){
+			expect(_launcher.find('.pv-home.pv-disabled').length).toEqual(1);
+		});
+	});
+	
+	it('should disable widget events of widgets in pv-forward zone', function(){
+		//Given the home widget is launched in pv-forward zone
+		var _member;
+		_launcher.data('widget', 'launcher');
+		loadWidget();
+		
+		launchWidget('home');
+		launchWidget('aboutprovictores');
+		launchWidget('home');
+		
+		//When clicking on the guildmember the guildmember widget should not be loaded
+		runs(function(){
+			expect(_launcher.find('.pv-aboutprovictores.pv-disabled').length).toEqual(1);
 		});
 	});
 	

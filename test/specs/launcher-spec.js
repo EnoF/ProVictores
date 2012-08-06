@@ -190,6 +190,25 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 		});
 	});
 	
+	it('should push the current widget to previous zone', function(){
+		//Given the about widget is launched in pv-forward zone
+		var _member;
+		_launcher.data('widget', 'launcher');
+		loadWidget();
+		
+		launchWidget('home');
+		launchWidget('aboutprovictores');
+		launchWidget('home');
+		
+		//When clicking on forward zone
+		clickWidget('.pv-forward');
+		
+		//Then the about provictores should move to a disabled zone
+		runs(function(){
+			expect(_launcher.find('.pv-previous > .pv-home.pv-disabled').length).toEqual(1);
+		});
+	});
+	
 	function clickWidget(widget){
 		var _loaded = false;
 		

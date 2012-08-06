@@ -41,16 +41,19 @@ function(loader, service){
 					_widget = $('<section>').data('widget', widgetId);	
 					_private.iterateWidgetStack(_widget);	
 					_private.loadSection.append(_widget);
-					_widget.widget(widgetId);
+					_widget.widget();
 				}
 			},
 			bindEvents : function(widget){
 				widget.on('click', 'nav a', function(event){
 					event.preventDefault();
 					var _widgetId = this.id.replace(/launch\-/, '');
-					
 					_private.getWidget(_widgetId);
-					
+				});
+				
+				widget.on('click', '.pv-previous, .pv-forward', function(){
+					var _widgetId = $(this).data('widget');
+					_private.loadPreviousWidget(_widgetId);
 				});
 			}
 		},

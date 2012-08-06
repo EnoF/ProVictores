@@ -154,20 +154,59 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 		});
 	});
 	
-	function launchWidget(widgetId){
+	it('should open the widget when clicked on the previous widget', function(){
+		//Given the home widget is launched in pv-previous zone
+		var _member;
+		_launcher.data('widget', 'launcher');
+		loadWidget();
+		
+		launchWidget('home');
+		launchWidget('aboutprovictores');
+		//When clicking on previous zone
+		clickWidget('.pv-previous');
+		
+		//Then the about provictores should move to a disabled zone
+		runs(function(){
+			expect(_launcher.find('.pv-aboutprovictores.pv-disabled').length).toEqual(1);
+		});
+	});
+	
+	it('should open the widget when clicked on the forward widget', function(){
+		//Given the about widget is launched in pv-forward zone
+		var _member;
+		_launcher.data('widget', 'launcher');
+		loadWidget();
+		
+		launchWidget('home');
+		launchWidget('aboutprovictores');
+		launchWidget('home');
+		
+		//When clicking on forward zone
+		clickWidget('.pv-forward');
+		
+		//Then the about provictores should move to a disabled zone
+		runs(function(){
+			expect(_launcher.find('.pv-home.pv-disabled').length).toEqual(1);
+		});
+	});
+	
+	function clickWidget(widget){
 		var _loaded = false;
 		
 		runs(function(){
-			//When The About link is clicked
 			_launcher.one('initialized', function(){
 				_loaded = true;
-			});		
-			_launcher.find('#launch-' + widgetId).click();
+			});
+			_launcher.find(widget).click();
 		});
 		
 		waitsFor(function(){
 			return _loaded;
 		});
+	}
+	
+	function launchWidget(widgetId){
+		clickWidget('#launch-' + widgetId);
 	}
 	
 	function loadWidget(){

@@ -28,19 +28,9 @@ describe('A guest visits the guild page to apply for our guild', function(){
 	
 	it('should be able to look through our member list to see the details of a guild member', function(){
 		//Given The widget contains a list of members
-		var _list = _guildmembersWidget.find('ol'),
-			_loaded;
 		
 		//When The Guest clicks on a Guild member
-		_list.find('li:first').click();
-		
-		_list.on('initialized', function(){
-			_loaded = true;
-		});
-		
-		waitsFor(function(){
-			return _loaded;
-		});
+		clickMember('li:first');
 		
 		//Then The Guest should see the Guild Member widget
 		runs(function(){
@@ -50,37 +40,36 @@ describe('A guest visits the guild page to apply for our guild', function(){
 	
 	it('should destroy the guildmember widget when opening a new guildmember widget', function(){
 		//Given The widget already has a guildmember widget open
+		clickMember('li:first');
+			
+		//When clicking an other member
+		runs(function(){
+			clickMember('li:last');
+		});
+		
+		//Then the new guildmember widget should be the only one open
+		runs(function(){
+			expect(_guildmembersWidget.find('li').length).toBeGreaterThan(1);
+			expect(_guildmembersWidget.find('ol .pv-guildmember').length).toBeLessThan(2);
+			expect(_guildmembersWidget.find('ol .pv-guildmember').length).toBeGreaterThan(0);
+		});
+		
+	});
+	
+	function clickMember(member){
 		var _list = _guildmembersWidget.find('ol'),
-			_loaded = false;
+			_loaded;
 		
-		_list.find('li:first').click();
+		_list.find(member).click();
 		
-		_list.on('initialized', function(){
+		_list.one('initialized', function(){
 			_loaded = true;
 		});
 		
 		waitsFor(function(){
 			return _loaded;
 		});
-			
-		//When clicking an other member
-		runs(function(){
-			_loaded = false;
-			_list.find('li:last').click();
-			
-			waitsFor(function(){
-				return _loaded;
-			});
-			
-		});
-		
-		//Then the new guildmember widget should be the only one open
-		runs(function(){
-			expect(_list.find('.pv-guildmember').length).toBeLessThan(2);
-			expect(_list.find('.pv-guildmember').length).toBeGreaterThan(0);
-		});
-		
-	});
+	}
 	
 	function loadWidget(){
 		

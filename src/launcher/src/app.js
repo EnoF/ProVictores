@@ -9,31 +9,30 @@ function(loader, service){
 					_forwardWidget = _private.widget.find('.pv-forward');
 				_forwardWidget.destroy();
 				_previousWidget.destroy();
-				_currentWidget.removeClass('pv-current').addClass('pv-previous');
-				_currentWidget.find('article').addClass('pv-disabled');
+				_private.pushCurrentTo('previous');
 				newWidget.addClass('pv-current');
 			},
-			pushCurrentToForward : function(widget){
-				var _current = _private.widget.find('.pv-current'),
-					_container = widget.parent();
-					
+			pushCurrentTo : function(newState){
+				var _current = _private.widget.find('.pv-current');
+				
 				_current.removeClass('pv-current');
-				_current.addClass('pv-forward');
+				_current.addClass('pv-' + newState);
 				_current.find('article').addClass('pv-disabled');
-				_container.removeClass('pv-previous').removeClass('pv-hidden');
-				_container.addClass('pv-current');
-				_container.find('.pv-disabled').removeClass('pv-disabled');
+			},
+			pushCurrentFrom : function(oldState){
+				var _old = _private.widget.find('.pv-' + oldState);
+				
+				_old.removeClass('pv-' + oldState).removeClass('pv-hidden');
+				_old.addClass('pv-current');
+				_old.find('.pv-disabled').removeClass('pv-disabled');
+			},
+			pushCurrentToForward : function(widget){
+				_private.pushCurrentTo('forward');
+				_private.pushCurrentFrom('previous');
 			},
 			pushCurrentToPrevious : function(widget){
-				var _current = _private.widget.find('.pv-current'),
-					_container = widget.parent();
-					
-				_current.removeClass('pv-current');
-				_current.addClass('pv-previous');
-				_current.find('article').addClass('pv-disabled');
-				_container.removeClass('pv-forward').removeClass('pv-hidden');
-				_container.addClass('pv-current');
-				_container.find('.pv-disabled').removeClass('pv-disabled');
+				_private.pushCurrentTo('previous');
+				_private.pushCurrentFrom('forward');
 			},
 			loadPreviousWidget : function(widgetId){
 				var _previousWidget,

@@ -24,6 +24,10 @@
 	background: #ffffff;
 }
 
+.pv-animating{
+	position: absolute;
+}
+
 .pv-previous{
 	position: absolute;
 	left: -400px;

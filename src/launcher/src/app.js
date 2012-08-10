@@ -9,30 +9,43 @@ function(loader, service){
 					_forwardWidget = _private.widget.find('.pv-forward');
 				_forwardWidget.destroy();
 				_previousWidget.destroy();
-				newWidget.addClass('pv-forward');
-				_private.pushCurrentToPrevious(newWidget);
+				_private.pushCurrentTo('previous').then(function(){
+					newWidget.addClass('pv-current');
+				});
 			},
 			pushCurrentTo : function(newState){
-				var _current = _private.widget.find('.pv-current');
+				var _current = _private.widget.find('.pv-current'),
+					_loaded = $.Deferred();
 				
 				_current.removeClass('pv-current');
 				_current.addClass('pv-' + newState);
 				_current.find('article').addClass('pv-disabled');
+				_loaded.resolve();
+				return _loaded;
 			},
 			pushCurrentFrom : function(oldState){
-				var _old = _private.widget.find('.pv-' + oldState);
+				var _old = _private.widget.find('.pv-' + oldState),
+					_loaded = $.Deferred();
 				
 				_old.removeClass('pv-' + oldState).removeClass('pv-hidden');
 				_old.addClass('pv-current');
 				_old.find('.pv-disabled').removeClass('pv-disabled');
+				_loaded.resolve();
+				return _loaded;
 			},
 			pushCurrentToForward : function(widget){
-				_private.pushCurrentTo('forward');
-				_private.pushCurrentFrom('previous');
+				var _loaded = $.Deferred();
+				$.when(_private.pushCurrentTo('forward'), _private.pushCurrentFrom('previous')).then(function(){
+					_loaded.resolve();
+				});
+				return _loaded;
 			},
 			pushCurrentToPrevious : function(widget){
-				_private.pushCurrentTo('previous');
-				_private.pushCurrentFrom('forward');
+				var _loaded = $.Deferred();
+				$.when(_private.pushCurrentTo('previous'), _private.pushCurrentFrom('forward')).then(function(){
+					_loaded.resolve();
+				});
+				return _loaded;
 			},
 			loadPreviousWidget : function(widgetId){
 				var _previousWidget,
@@ -49,11 +62,9 @@ function(loader, service){
 				//Therefore if trying to load a widget in either previous or forward state
 				//Push accordingly
 				if(_previousWidget.length > 0){
-					_private.pushCurrentToForward(_previousWidget);
-					_loaded.resolve();
+					return _private.pushCurrentToForward(_previousWidget);
 				}else if(_forwardWidget.length > 0){
-					_private.pushCurrentToPrevious(_forwardWidget);
-					_loaded.resolve();
+					return _private.pushCurrentToPrevious(_forwardWidget);
 				}else{
 					//When the widget was not loaded before
 					//Loading a previous widget has failed

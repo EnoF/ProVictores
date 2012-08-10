@@ -9,8 +9,8 @@ function(loader, service){
 					_forwardWidget = _private.widget.find('.pv-forward');
 				_forwardWidget.destroy();
 				_previousWidget.destroy();
-				_private.pushCurrentTo('previous');
-				newWidget.addClass('pv-current');
+				newWidget.addClass('pv-forward');
+				_private.pushCurrentToPrevious(newWidget);
 			},
 			pushCurrentTo : function(newState){
 				var _current = _private.widget.find('.pv-current');
@@ -37,33 +37,41 @@ function(loader, service){
 			loadPreviousWidget : function(widgetId){
 				var _previousWidget,
 					_forwardWidget,
-					_current = _private.widget.find('.pv-current');
+					_current = _private.widget.find('.pv-current'),
+					_loaded = $.Deferred();
+				//Return when trying to load the widget which is already loaded
 				if(_current.children('.pv-' + widgetId).length > 0){
-					_private.widget.trigger('initialized');
-					return _current;
+					_loaded.resolve();
 				}
 				_previousWidget = _private.widget.find('.pv-content > .pv-previous > .pv-' + widgetId);
 				_forwardWidget = _private.widget.find('.pv-content > .pv-forward > .pv-' + widgetId);
+				//A widget can only be opened once
+				//Therefore if trying to load a widget in either previous or forward state
+				//Push accordingly
 				if(_previousWidget.length > 0){
 					_private.pushCurrentToForward(_previousWidget);
-					_private.widget.trigger('initialized');
-					return _previousWidget;
+					_loaded.resolve();
 				}else if(_forwardWidget.length > 0){
 					_private.pushCurrentToPrevious(_forwardWidget);
-					_private.widget.trigger('initialized');
-					return _forwardWidget;
+					_loaded.resolve();
 				}else{
-					return [];
+					//When the widget was not loaded before
+					//Loading a previous widget has failed
+					_loaded.reject();
 				}
+				return _loaded;
 			},
 			getWidget : function(widgetId){
-				var _widget = _private.loadPreviousWidget(widgetId);
-				if(_widget.length === 0){
+				_private.loadPreviousWidget(widgetId).then(function(){
+					//Notify the widget all widgets have been initialised
+					_private.widget.trigger('initialized');
+				}).fail(function(){
 					_widget = $('<section>').data('widget', widgetId);	
-					_private.iterateWidgetStack(_widget);	
 					_private.loadSection.append(_widget);
+					_private.iterateWidgetStack(_widget);	
+					//Widget will be notified when initialized
 					_widget.widget();
-				}
+				});
 			},
 			bindEvents : function(widget){
 				widget.on('click', 'nav a', function(event){
@@ -74,7 +82,7 @@ function(loader, service){
 				
 				widget.on('click', '.pv-previous, .pv-forward', function(){
 					var _widgetId = $(this).data('widget');
-					_private.loadPreviousWidget(_widgetId);
+					_private.getWidget(_widgetId);
 				});
 			}
 		},

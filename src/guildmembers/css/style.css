@@ -1,0 +1,22 @@
+.pv-guildmembers .pv-widget-placeholder {
+	clear: both;
+}
+
+.pv-guildmembers ol > li {
+	clear: both;
+	padding-top: 3px;
+}
+
+.pv-guildmembers dl {
+	clear: both;
+}
+
+.pv-guildmembers dt.pv-guildmember-name{
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.pv-guildmembers dt, .pv-guildmembers dd{
+	float: left;
+	margin: 2px 5px 0;
+}

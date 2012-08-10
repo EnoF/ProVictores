@@ -10,13 +10,14 @@ function(loader, service){
 				_forwardWidget.destroy();
 				_previousWidget.destroy();
 				return _private.pushCurrentTo('previous').always(function(){
-					newWidget.addClass('pv-current');
+					newWidget.addClass('pv-current').addClass('active');
 				});
 			},
 			pushCurrentTo : function(newState){
 				var _current = _private.widget.find('.pv-current'),
 					_loaded = $.Deferred();
 				
+				_current.removeClass('active');
 				_current.switchClass('pv-current', 'pv-' + newState, 500, function(){
 					_current.find('article').addClass('pv-disabled');
 					_loaded.resolve();
@@ -33,6 +34,7 @@ function(loader, service){
 					_loaded = $.Deferred();
 				
 				_old.removeClass('pv-hidden');
+				_old.addClass('active');
 				_old.switchClass('pv-' + oldState, 'pv-current', 500, function(){
 					_old.find('.pv-disabled').removeClass('pv-disabled');
 					_loaded.resolve();

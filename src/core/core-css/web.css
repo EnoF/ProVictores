@@ -1,5 +1,6 @@
 body {
 	font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+	background: url('./img/background.jpg') no-repeat;
 }
 
 h1 {

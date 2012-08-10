@@ -19,13 +19,16 @@
 	float: left;
 }
 
-.pv-current{
-	width: 800px;
-	background: #ffffff;
-	position: absolute;
+.pv-launcher .active{
+	background: rgba(255, 255, 255, 0.8);
 }
 
-.pv-animating{
+.pv-content > section{
+	min-height: 800px;
+}
+
+.pv-current{
+	width: 800px;
 	position: absolute;
 }
 
@@ -34,10 +37,6 @@
 	left: -400px;
 	width: 800px;
 	z-index: -1;
-	
-	-moz-opacity: 0.5;
-	-webkit-opacity: 0.5;
-	opacity: 0.5;
 }
 
 .pv-forward{
@@ -45,7 +44,9 @@
 	left: 800px;
 	width: 800px;
 	z-index: -1;
-	
+}
+
+.pv-disabled{
 	-moz-opacity: 0.5;
 	-webkit-opacity: 0.5;
 	opacity: 0.5;

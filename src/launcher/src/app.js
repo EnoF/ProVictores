@@ -9,7 +9,7 @@ function(loader, service){
 					_forwardWidget = _private.widget.find('.pv-forward');
 				_forwardWidget.destroy();
 				_previousWidget.destroy();
-				_private.pushCurrentTo('previous').then(function(){
+				return _private.pushCurrentTo('previous').always(function(){
 					newWidget.addClass('pv-current');
 				});
 			},
@@ -17,20 +17,31 @@ function(loader, service){
 				var _current = _private.widget.find('.pv-current'),
 					_loaded = $.Deferred();
 				
-				_current.removeClass('pv-current');
-				_current.addClass('pv-' + newState);
-				_current.find('article').addClass('pv-disabled');
-				_loaded.resolve();
+				_current.switchClass('pv-current', 'pv-' + newState, 500, function(){
+					_current.find('article').addClass('pv-disabled');
+					_loaded.resolve();
+				});
+				
+				if(_current.length === 0){
+					_loaded.reject();
+				}
+				
 				return _loaded;
 			},
 			pushCurrentFrom : function(oldState){
 				var _old = _private.widget.find('.pv-' + oldState),
 					_loaded = $.Deferred();
 				
-				_old.removeClass('pv-' + oldState).removeClass('pv-hidden');
-				_old.addClass('pv-current');
-				_old.find('.pv-disabled').removeClass('pv-disabled');
-				_loaded.resolve();
+				_old.removeClass('pv-hidden');
+				_old.switchClass('pv-' + oldState, 'pv-current', 500, function(){
+					_old.find('.pv-disabled').removeClass('pv-disabled');
+					_loaded.resolve();
+				});
+				
+				if(_old.length === 0){
+					_loaded.reject();
+				}				
+				
 				return _loaded;
 			},
 			pushCurrentToForward : function(widget){
@@ -79,9 +90,10 @@ function(loader, service){
 				}).fail(function(){
 					_widget = $('<section>').data('widget', widgetId);	
 					_private.loadSection.append(_widget);
-					_private.iterateWidgetStack(_widget);	
-					//Widget will be notified when initialized
-					_widget.widget();
+					_private.iterateWidgetStack(_widget).always(function(){
+						//Widget will be notified when initialized
+						_widget.widget();
+					});	
 				});
 			},
 			bindEvents : function(widget){

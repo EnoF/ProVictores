@@ -1,21 +1,19 @@
 describe('A guest launches a widget from the launch bar opening a new widget', function(){
 	
-	var _launcher = $("<section>");
+	var _launcher;
 	
 	beforeEach(function(){
 		$('body').append($('<section>').addClass('testArea'));
 		$('.testArea').append(_launcher);
+		_launcher = $("<section>").data('widget', 'launcher');
 	});
 	
 	afterEach(function(){
-		_launcher = $("<section>");
 		$('.testArea').remove();
 	});
 	
 	it('should load the widget with information about ProVictores', function(){
 		//Given The about widget is defined
-		var _loaded = false;
-		_launcher.data("widget", "launcher");
 		loadWidget();
 			
 		launchWidget('aboutprovictores');
@@ -30,8 +28,6 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 	
 	it('should place a loaded widget in the previous widget spot when launching a new widget', function(){
 		//Given The about widget is launched
-		var _loaded = false;
-		_launcher.data('widget', 'launcher');
 		loadWidget();
 		
 		launchWidget('aboutprovictores');
@@ -49,8 +45,6 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 	
 	it('should hide widgets which were previously in the previous state', function(){
 		//Given The about widget is launched
-		var _loaded = false;
-		_launcher.data('widget', 'launcher');
 		loadWidget();
 		
 		launchWidget('aboutprovictores');
@@ -73,8 +67,6 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 	
 	it('should reuse an widget if it was opened before', function(){
 		//Given The about widget is launched
-		var _loaded = false;
-		_launcher.data('widget', 'launcher');
 		loadWidget();
 		
 		launchWidget('aboutprovictores');
@@ -97,7 +89,6 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 	
 	it('should not reload a widget if the widget was a child widget', function(){
 		//Given The about widget is launched
-		_launcher.data('widget', 'launcher');
 		loadWidget();
 		
 		launchWidget('home');
@@ -125,8 +116,6 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 	
 	it('should disable widget events of widgets in pv-previous zone', function(){
 		//Given the home widget is launched in pv-previous zone
-		var _member;
-		_launcher.data('widget', 'launcher');
 		loadWidget();
 		
 		launchWidget('home');
@@ -140,8 +129,6 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 	
 	it('should disable widget events of widgets in pv-forward zone', function(){
 		//Given the home widget is launched in pv-forward zone
-		var _member;
-		_launcher.data('widget', 'launcher');
 		loadWidget();
 		
 		launchWidget('home');
@@ -156,8 +143,6 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 	
 	it('should open the widget when clicked on the previous widget', function(){
 		//Given the home widget is launched in pv-previous zone
-		var _member;
-		_launcher.data('widget', 'launcher');
 		loadWidget();
 		
 		launchWidget('home');
@@ -173,8 +158,6 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 	
 	it('should open the widget when clicked on the forward widget', function(){
 		//Given the about widget is launched in pv-forward zone
-		var _member;
-		_launcher.data('widget', 'launcher');
 		loadWidget();
 		
 		launchWidget('home');
@@ -192,8 +175,6 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 	
 	it('should push the current widget to previous zone', function(){
 		//Given the about widget is launched in pv-forward zone
-		var _member;
-		_launcher.data('widget', 'launcher');
 		loadWidget();
 		
 		launchWidget('home');

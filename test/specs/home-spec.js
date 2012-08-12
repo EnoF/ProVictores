@@ -25,7 +25,9 @@ describe('A guest visits the home page to gain quick access to important feature
 		//loaded in the beforeEach
 		
 		//Then The Guest should see the guildmembers widget
+			//The guildmembers widget should be loaded in small state
 		expect(_homeWidget.find('.pv-guildmembers').length > 0).toBeTruthy();
+		expect(_homeWidget.find('section[data-widget=guildmembers]').data('widgetparams')).toEqual('small');
 	});
-	
+		
 });

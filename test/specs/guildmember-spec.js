@@ -17,7 +17,7 @@ describe('A guest clicks on guildmember to see more info', function(){
 		//  EnoF Guild Leader
 		_guildmemberWidget.
 			data("widget", "guildmember").
-			data("widgetParams", 1);
+			data("widgetparams", 1);
 			
 		//When The widget is loaded
 		loadWidget();
@@ -26,7 +26,7 @@ describe('A guest clicks on guildmember to see more info', function(){
 		runs(function(){
 			expect(_guildmemberWidget.find('.pv-guildmember-name').text()).toEqual('EnoF');
 			expect(_guildmemberWidget.find('.pv-guildmember-rank').text()).toEqual('Guild Leader');
-		})
+		});
 	});
 	
 	function loadWidget(){

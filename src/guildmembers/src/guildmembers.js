@@ -1,17 +1,22 @@
 define(['util/loader', 'util/service'],
 function(loader, service){
-	function Guildmembers(widget){
+	function Guildmembers(widget, state){
 		var _private = {
 			widget : widget,
 			placeholder : widget.find('.pv-widget-placeholder'),
+			state : state,
 			bindEvents : function(){
 				_private.widget.on('click', 'li', function(){
 					if(_private.widget.is('.pv-disabled')) return;
+					if(_private.state === 'small'){
+						_private.placeholder.trigger('guildmembers.open');
+						return;
+					}
 					var _li = $(this),
 						_member = _li.data('guildmember'),
 						_memberWidget = _private.placeholder;
 					_memberWidget.data('widget', 'guildmember');
-					_memberWidget.data('widgetParams', _member);
+					_memberWidget.data('widgetparams', _member);
 					_private.placeholder.find('.pv-guildmember').destroy();
 					_memberWidget.widget();
 				});

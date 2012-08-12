@@ -74,7 +74,7 @@ define(function(){
 		//The widget to load
 		var _widget = this,
 			_widgetPage = this.data('widget'),
-			_widgetParams = this.data('widgetParams'),
+			_widgetParams = this.data('widgetparams'),
 			_deferred = $.Deferred();
 		_public.loadWidgetPage(_widgetPage, _widgetParams).then(function(article){
 			var _subWidgetDeferred = [];

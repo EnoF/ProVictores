@@ -23,30 +23,30 @@
 	background: rgba(255, 255, 255, 0.8);
 }
 
-.pv-content > section{
+.pv-launcher .pv-content > section{
 	min-height: 800px;
 }
 
-.pv-current{
+.pv-launcher .pv-current{
 	width: 800px;
 	position: absolute;
 }
 
-.pv-previous{
+.pv-launcher .pv-previous{
 	position: absolute;
 	left: -400px;
 	width: 800px;
 	z-index: -1;
 }
 
-.pv-forward{
+.pv-launcher .pv-forward{
 	position: absolute;
 	left: 800px;
 	width: 800px;
 	z-index: -1;
 }
 
-.pv-disabled{
+.pv-launcher .pv-disabled{
 	-moz-opacity: 0.5;
 	-webkit-opacity: 0.5;
 	opacity: 0.5;

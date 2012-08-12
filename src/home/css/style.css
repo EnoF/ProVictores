@@ -1,0 +1,4 @@
+.pv-launcher section[data-widget='guildmembers']{
+	left: 600px;
+	position: absolute;
+}

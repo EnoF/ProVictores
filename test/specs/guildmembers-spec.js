@@ -50,8 +50,8 @@ describe('A guest visits the guild page to apply for our guild', function(){
 		//Then the new guildmember widget should be the only one open
 		runs(function(){
 			expect(_guildmembersWidget.find('li').length).toBeGreaterThan(1);
-			expect(_guildmembersWidget.find('ol .pv-guildmember').length).toBeLessThan(2);
-			expect(_guildmembersWidget.find('ol .pv-guildmember').length).toBeGreaterThan(0);
+			expect(_guildmembersWidget.find('.pv-guildmember').length).toBeLessThan(2);
+			expect(_guildmembersWidget.find('.pv-guildmember').length).toBeGreaterThan(0);
 		});
 		
 	});
@@ -62,7 +62,7 @@ describe('A guest visits the guild page to apply for our guild', function(){
 		
 		_list.find(member).click();
 		
-		_list.one('initialized', function(){
+		_guildmembersWidget.one('initialized', function(){
 			_loaded = true;
 		});
 		

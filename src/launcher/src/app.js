@@ -109,6 +109,10 @@ function(loader, service){
 					var _widgetId = $(this).data('widget');
 					_private.getWidget(_widgetId);
 				});
+				
+				widget.on('guildmembers.open', function(){
+					_private.getWidget('guildmembers');
+				});
 			}
 		},
 		_public = {

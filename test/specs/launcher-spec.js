@@ -4,8 +4,8 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 	
 	beforeEach(function(){
 		$('body').append($('<section>').addClass('testArea'));
-		$('.testArea').append(_launcher);
 		_launcher = $("<section>").data('widget', 'launcher');
+		$('.testArea').append(_launcher);
 	});
 	
 	afterEach(function(){
@@ -41,6 +41,18 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 			expect(_launcher.find('.pv-previous .pv-aboutprovictores').length).toBeGreaterThan(0);
 			expect(_launcher.find('.pv-current .pv-guildmembers').length).toBeGreaterThan(0);
 		});
+	});
+	
+	it('should launch the guildmembers widget when clicked on the guildmembers widget in the home widget', function(){
+		//Given the home widget is launched
+		loadWidget();
+		launchWidget('home');
+		
+		clickIn('.pv-current .pv-guildmembers');
+		
+		runs(function(){
+			expect(_launcher.find('.pv-current .pv-guildmembers').length).toEqual(1);
+		})
 	});
 	
 	it('should hide widgets which were previously in the previous state', function(){
@@ -197,8 +209,22 @@ describe('A guest launches a widget from the launch bar opening a new widget', f
 			_launcher.one('initialized', function(){
 				_loaded = true;
 			});
+			
 			_launcher.find(widget).click();
 		});
+		
+		waitsFor(function(){
+			return _loaded;
+		});
+	}
+	
+	function clickIn(selector){
+		var _loaded = false;
+		
+		_launcher.one('initialized', function(){
+			_loaded = true;
+		});
+		_launcher.find(selector).click();
 		
 		waitsFor(function(){
 			return _loaded;

@@ -1,6 +1,14 @@
 describe('A guest visits the guild page to apply for our guild', function(){
 	
-	var _guildmembersWidget;
+	var _guildmembersWidget,
+		_loaded = false;
+	
+	require(['util/loader'], function(){
+		_loaded = true;
+		waitsFor(function(){
+			return _loaded;
+		});
+	});
 	
 	afterEach(function(){
 		$('.testArea').remove();
@@ -105,18 +113,14 @@ describe('A guest visits the guild page to apply for our guild', function(){
 	}
 	
 	function loadWidget(){
-		
 		var _loaded = false;
 		
-		require(['util/loader'], function(){
-			_guildmembersWidget.widget().then(function(){
-				_loaded = true;
-			});
+		_guildmembersWidget.widget().then(function(){
+			_loaded = true;
 		});
 		
 		waitsFor(function(){
 			return _loaded;
 		});
-		
 	}
 });

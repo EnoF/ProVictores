@@ -7,7 +7,7 @@ function(service){
 		_public = {
 			initialize : function(widget, id){
 				if(id === undefined){
-					throw new Error("Define the params to initialize GuildMember Widget")
+					throw new Error("Define the params to initialize GuildMember Widget");
 				}
 				return service.get('guildmember/' + id).then(function(member){
 					widget.find('.pv-guildmember-name').text(member.name);

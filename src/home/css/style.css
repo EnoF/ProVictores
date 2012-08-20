@@ -1,4 +1,3 @@
-.pv-launcher section[data-widget='guildmembers']{
-	left: 600px;
-	position: absolute;
+.pv-home h2{
+	background-image: url('/ProVictores/src/core/core-css/img/home_header.png');
 }

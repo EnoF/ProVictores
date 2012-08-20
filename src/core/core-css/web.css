@@ -9,11 +9,23 @@ h1 {
 }
 
 h2 {
+	color: #c00000;
 	font-size: 24px;
+	background-position: right 25px;
+	background-size: 100% auto;
+	padding: 5px;
+	float: left;
+    background-repeat:no-repeat;
+    margin-bottom: 15px;
 }
 
 article {
 	margin: 10px;
+}
+
+p{
+	clear: both;
+	float: left;
 }
 
 .pv-pagewidth {

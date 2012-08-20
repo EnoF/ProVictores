@@ -1,0 +1,7 @@
+.pv-guildmember section{
+	clear:both;
+}
+
+.pv-guildmember h2{
+	background-image: url('/ProVictores/src/core/core-css/img/guildmember_header.png');
+}

@@ -6,6 +6,11 @@
 	display: inline-block;
 }
 
+.pv-launcher section[data-widget='guildmembers']{
+	left: 600px;
+	position: absolute;
+}
+
 .pv-launcher a{
 	color: #D6230C;
 	text-decoration:none;

@@ -20,3 +20,7 @@
 	float: left;
 	margin: 2px 5px 0;
 }
+
+.pv-guildmembers h2{
+	background-image: url('/ProVictores/src/core/core-css/img/guildmembers_header.png');
+}

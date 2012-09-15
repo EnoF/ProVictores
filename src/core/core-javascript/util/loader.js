@@ -7,6 +7,43 @@ define(function(){
 			if(!_hasBeenLoadedBefore){
 				$('head').append(_link);
 			}			
+		},
+		loadApp : function(app, article, params){
+			try{
+				return app.initialize(article, params);
+			}catch(e){
+				console.error(e);
+				return $.Deferred().reject(e);
+			}
+		},
+		initializePage : function(page, params, html){
+			var _html = $("<html>").html(html),
+				_article = _private.getArticle(_html),
+				_deferred = $.Deferred();
+				
+			require({paths : { 'widget' : '../..'}},['widget/' + page + '/src/app'], function(app){
+				_private.loadCss(page);
+				_private.loadApp(app, _article, params).then(function(){
+					_deferred.resolve(_article);
+				});
+			});
+			
+			return _deferred;
+		},
+		getArticle : function(html){
+			var _article = html.find("article");
+			if(_article.length === 0){
+				throw new Error("No Article found");
+			}
+			return _article;
+		},
+		loadHtml : function(html){
+			var _html = $("<html>").html(html),
+				_article = _html.find("article");
+				
+			if(_article.length === 0) throw new Error("No Article found");
+			
+			return _article;
 		}
 	},
 	_public = {
@@ -16,23 +53,25 @@ define(function(){
 		setBasePath : function(basePath){
 			_private.basePath = basePath;
 		},
-		loadPage : function(page){
-			return $.ajax({
+		loadPage : function(page, params){
+			var _deferred = $.Deferred();
+			
+			$.ajax({
 				url : _private.basePath + page + "/index.html"
+			}).then(function(html){
+				_private.initializePage(page, params, html).then(function(article){
+					_deferred.resolve(article);
+				});
 			});
+			
+			return _deferred;
 		},
 		loadTemplate : function(page, template){
 			var _deferred = $.Deferred();
 			$.ajax({
 				url : _private.basePath + page + '/templates/'+ template + ".html"
 			}).then(function(html){
-				var _html = $("<html>").html(html),
-					_article = _html.find("article");
-					
-				if(_article.length === 0){
-					throw new Error("No Article found");
-				}
-				
+				var _article = _private.loadHtml(html);
 				_deferred.resolve(_article);
 			}).fail(function(){
 				_deferred.reject();
@@ -41,31 +80,7 @@ define(function(){
 			return _deferred;
 		},
 		loadWidgetPage : function(page, params){
-			var _deferred = $.Deferred();
-			
-			_public.loadPage(page).then(function(html){
-				var _html = $("<html>").html(html),
-					_article = _html.find("article");
-					
-				if(_article.length === 0){
-					throw new Error("No Article found");
-				}
-				require({paths : { 'widget' : '../..'}},['widget/' + page + '/src/app'], function(app){
-					try{
-						_private.loadCss(page);
-						app.initialize(_article, params).then(function(){
-							_deferred.resolve(_article);
-						});
-					}catch(e){
-						console.error(e);
-						_deferred.reject(e);
-					}
-				});
-			}).fail(function(error){
-				_deferred.reject(error);
-			});
-			
-			return _deferred;
+			return _public.loadPage(page, params);
 		}
 	};
 	

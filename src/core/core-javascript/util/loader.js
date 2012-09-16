@@ -44,6 +44,25 @@ define(function(){
 			if(_article.length === 0) throw new Error("No Article found");
 			
 			return _article;
+		},
+		loadSubwidgets: function(article, widget){
+			var _widgetPage = widget.data('widget'),
+				_subWidgetDeferred = [],
+				_deferred = $.Deferred();
+			
+			article.addClass("pv-" + _widgetPage);
+			article.find("[data-widget]").each(function(){
+				_subWidgetDeferred.push($(this).widget());
+			});
+			$.when.apply($, _subWidgetDeferred).then(function(){
+				widget.append(article);
+				widget.trigger("initialized", widget);
+				_deferred.resolve();
+			}).fail(function(){
+				_deferred.reject();
+			});
+			
+			return _deferred;
 		}
 	},
 	_public = {
@@ -94,13 +113,7 @@ define(function(){
 		_public.loadWidgetPage(_widgetPage, _widgetParams).then(function(article){
 			var _subWidgetDeferred = [];
 			_widget.empty();
-			article.addClass("pv-" + _widgetPage);
-			article.find("[data-widget]").each(function(){
-				_subWidgetDeferred.push($(this).widget());
-			});
-			$.when.apply($, _subWidgetDeferred).then(function(){
-				_widget.append(article);
-				_widget.trigger("initialized", _widget);
+			_private.loadSubwidgets(article, _widget).then(function(){
 				_deferred.resolve();
 			}).fail(function(){
 				_deferred.reject();

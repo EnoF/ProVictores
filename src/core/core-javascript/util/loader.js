@@ -1,4 +1,5 @@
-define(function(){
+define(['util/deferred'],
+function(Deferred){
 	var _private = {
 		basePath : "./",
 		loadCss : function(page){
@@ -13,13 +14,13 @@ define(function(){
 				return app.initialize(article, params);
 			}catch(e){
 				console.error(e);
-				return $.Deferred().reject(e);
+				return new Deferred().reject(e);
 			}
 		},
 		initializePage : function(page, params, html){
 			var _html = $("<html>").html(html),
 				_article = _private.getArticle(_html),
-				_deferred = $.Deferred();
+				_deferred = new Deferred();
 				
 			require({paths : { 'widget' : '../..'}},['widget/' + page + '/src/app'], function(app){
 				_private.loadCss(page);
@@ -48,7 +49,7 @@ define(function(){
 		loadSubwidgets: function(article, widget){
 			var _widgetPage = widget.data('widget'),
 				_subWidgetDeferred = [],
-				_deferred = $.Deferred();
+				_deferred = new Deferred();
 			
 			article.addClass("pv-" + _widgetPage);
 			article.find("[data-widget]").each(function(){
@@ -73,7 +74,7 @@ define(function(){
 			_private.basePath = basePath;
 		},
 		loadPage : function(page, params){
-			var _deferred = $.Deferred();
+			var _deferred = new Deferred();
 			
 			$.ajax({
 				url : _private.basePath + page + "/index.html"
@@ -86,7 +87,7 @@ define(function(){
 			return _deferred;
 		},
 		loadTemplate : function(page, template){
-			var _deferred = $.Deferred();
+			var _deferred = new Deferred();
 			$.ajax({
 				url : _private.basePath + page + '/templates/'+ template + ".html"
 			}).then(function(html){
@@ -109,7 +110,7 @@ define(function(){
 		var _widget = this,
 			_widgetPage = this.data('widget'),
 			_widgetParams = this.data('widgetparams'),
-			_deferred = $.Deferred();
+			_deferred = new Deferred();
 		_public.loadWidgetPage(_widgetPage, _widgetParams).then(function(article){
 			var _subWidgetDeferred = [];
 			_widget.empty();

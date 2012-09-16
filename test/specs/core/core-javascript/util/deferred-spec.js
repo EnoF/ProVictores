@@ -28,6 +28,49 @@ describe('Module deferred', function(){
 		});
 	});
 	
+	describe('subscription', function(){
+		
+		it('should resolve a deferred when the registered deferred is resolved too', function(){
+			var _subscriber = new Deferred(),
+				_publisher = new Deferred();
+			
+			_subscriber.subscribe(_publisher);
+			
+			_subscriber.then(function(){
+				throw new Error("Some error");
+			});
+			
+			registerException();
+			
+			_publisher.resolve();
+			
+			runs(function(){
+				expect(exceptionRaised.message).toBe("Some error");
+			});
+			
+		});
+		
+		it('should reject a deferred when the registered deferred is rejected too', function(){
+			var _subscriber = new Deferred(),
+				_publisher = new Deferred();
+			
+			_subscriber.subscribe(_publisher);
+			
+			_subscriber.fail(function(){
+				throw new Error("Some error");
+			});
+			
+			registerException();
+			
+			_publisher.reject();
+			
+			runs(function(){
+				expect(exceptionRaised.message).toBe("Some error");
+			});
+			
+		});
+	})
+	
 	function registerThen(deferred){
 		deferred.then(function(){
 			throw new Error("Some error");

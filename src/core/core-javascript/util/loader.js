@@ -114,11 +114,7 @@ function(Deferred){
 		_public.loadWidgetPage(_widgetPage, _widgetParams).then(function(article){
 			var _subWidgetDeferred = [];
 			_widget.empty();
-			_private.loadSubwidgets(article, _widget).then(function(){
-				_deferred.resolve();
-			}).fail(function(){
-				_deferred.reject();
-			});
+			_deferred.subscribe(_private.loadSubwidgets(article, _widget));
 		}).fail(function(){
 			_deferred.reject();
 		});

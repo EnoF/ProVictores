@@ -2,7 +2,8 @@ define(function(){
 	function Deferred(){
 		var _deferred = $.Deferred(),
 			_originalThen = _deferred.then,
-			_originalFail = _deferred.fail;
+			_originalFail = _deferred.fail,
+			_originalAlways = _deferred.always;
 		
 		function executePromise(promise, params){
 			try{
@@ -22,6 +23,13 @@ define(function(){
 		
 		_deferred.fail = function(promise){
 			_originalFail(function(){
+				executePromise(promise, arguments);
+			});
+			return _deferred;
+		};
+		
+		_deferred.always = function(promise){
+			_originalAlways(function(){
 				executePromise(promise, arguments);
 			});
 			return _deferred;

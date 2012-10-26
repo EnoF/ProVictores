@@ -27,12 +27,16 @@ define(function(){
 			return _deferred;
 		};
 		
-		_deferred.subscribe = function(publisher){
-			publisher.then(function(){
+		_deferred.subscribe = function(){
+			var _publishers = arguments;
+			
+			$.when.apply($, _publishers).then(function(){
 				_deferred.resolve.apply(_deferred, arguments);
 			}).fail(function(){
 				_deferred.reject.apply(_deferred, arguments);
 			});
+			
+			return _deferred;
 		};
 		
 		return _deferred;

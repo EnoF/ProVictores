@@ -28,6 +28,20 @@ describe('Module deferred', function(){
 		});
 	});
 	
+	it('The error in the done should get catched', function(){
+		var _deferred = new Deferred();
+		
+		registerDone(_deferred);
+		
+		registerException();
+		
+		_deferred.resolve();
+		
+		runs(function(){
+			expect(exceptionRaised.message).toBe("Some error");
+		});
+	});
+	
 	it('The error in the fail should get catched', function(){
 		var _deferred = new Deferred();
 		
@@ -102,6 +116,12 @@ describe('Module deferred', function(){
 	
 	function registerThen(deferred){
 		deferred.then(function(){
+			throw new Error("Some error");
+		});
+	}
+	
+	function registerDone(deferred){
+		deferred.done(function(){
 			throw new Error("Some error");
 		});
 	}
